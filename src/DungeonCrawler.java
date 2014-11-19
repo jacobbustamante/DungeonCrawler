@@ -1,22 +1,30 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
-import org.semanticweb.owlapi.model.OWLOntologyManager;
-
-/**
+ * DungeonCrawler.java
+ * Main file for the DungeonCrawler dungeon solving program.
  *
- * @author jacobbustamante
+ * CSC 481 - Fall 2014 - Final Project - Dr. Hassal
+ * 
+ * Jacob Bustamante, Nathan Farnum
  */
+
+import org.semanticweb.owlapi.model.OWLOntology;
+import org.semanticweb.owlapi.model.OWLOntologyCreationException;
+
+
 public class DungeonCrawler {
 
-   /**
-    * @param args the command line arguments
-    */
+   private static final String ontologyFileName = "./CSC481-Ontology-Bustamante_Farnum.owl";
+   
    public static void main(String[] args) {
-      // TODO code application logic here
+      OWLOntology ontology;
+      
+      try {
+         ontology = OntologyManager.loadOntology(ontologyFileName);
+      }
+      catch(OWLOntologyCreationException e) {
+         System.out.println("could not load ontology at " + ontologyFileName);
+      }
+      
    }
    
 }
