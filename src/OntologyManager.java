@@ -1,10 +1,3 @@
-
-import java.io.File;
-import org.semanticweb.owlapi.apibinding.OWLManager;
-import org.semanticweb.owlapi.model.OWLOntology;
-import org.semanticweb.owlapi.model.OWLOntologyCreationException;
-import org.semanticweb.owlapi.model.OWLOntologyManager;
-
 /*
  * OntologyManager.java
  * Class file to manage DungeonCrawler ontology.
@@ -14,6 +7,11 @@ import org.semanticweb.owlapi.model.OWLOntologyManager;
  * Jacob Bustamante, Nathan Farnum
  */
 
+import java.io.File;
+import org.semanticweb.owlapi.apibinding.OWLManager;
+import org.semanticweb.owlapi.model.OWLOntology;
+import org.semanticweb.owlapi.model.OWLOntologyCreationException;
+import org.semanticweb.owlapi.model.OWLOntologyManager;
 
 public class OntologyManager {
    
