@@ -13,6 +13,11 @@ import org.semanticweb.owlapi.model.OWLOntology;
 import org.semanticweb.owlapi.model.OWLOntologyCreationException;
 import org.semanticweb.owlapi.model.OWLOntologyManager;
 
+ /* NOTE: not sure how to structure this yet either.
+  *
+  * TODO: 1) figure out how to access classes, individuals, properties, etc.
+  *
+ */
 public class OntologyManager {
    
    public static OWLOntology loadOntology(String fileName) throws OWLOntologyCreationException {
