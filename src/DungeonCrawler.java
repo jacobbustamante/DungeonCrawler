@@ -8,8 +8,8 @@
  */
 
 import java.util.Scanner;
+
 import org.semanticweb.owlapi.model.OWLOntology;
-import org.semanticweb.owlapi.model.OWLOntologyCreationException;
 
 
 public class DungeonCrawler {
@@ -17,16 +17,17 @@ public class DungeonCrawler {
    private static final String ontologyFileName = "./CSC481-Ontology-Bustamante_Farnum.owl";
    
    public static void main(String[] args) {
+      OntologyManager ontologyManager;
       OWLOntology ontology;
       Character player;
       
-      try {
-         ontology = OntologyManager.loadOntology(ontologyFileName);
-      }
-      catch(OWLOntologyCreationException e) {
-         System.out.println("could not load ontology at " + ontologyFileName);
+      
+      ontologyManager = new OntologyManager(ontologyFileName);
+      ontology = ontologyManager.ontology;
+      if(ontology == null)
          return;
-      }
+      ontologyManager.testOntology();
+      
       
       player = createCharacterFromPrompt();
       
