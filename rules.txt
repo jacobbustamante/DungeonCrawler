@@ -1,0 +1,13 @@
+Rules
+
+can beat dungeon
+can_clear_room(player, room), room == dungeon("fire dungeon").boss_room -> can_beat_dungeon("fire dungeon")
+
+can clear room
+can_reach_room(player, some_room), can_defeat_monsters(some_room.monsters) -> can_clear_room(player, room)
+
+can reach room
+...
+
+can defeat monsters
+...
