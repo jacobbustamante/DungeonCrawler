@@ -29,7 +29,7 @@ public class DungeonCrawler {
       ontologyManager.testOntology();
       
       
-      player = createCharacterFromPrompt();
+      //player = createCharacterFromPrompt();
       
    }
    

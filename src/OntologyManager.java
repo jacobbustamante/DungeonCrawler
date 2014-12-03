@@ -18,6 +18,9 @@ import org.semanticweb.owlapi.model.OWLOntologyCreationException;
 import org.semanticweb.owlapi.model.OWLOntologyID;
 import org.semanticweb.owlapi.model.OWLOntologyManager;
 
+import com.clarkparsia.pellet.owlapiv3.PelletReasoner;
+import com.clarkparsia.pellet.owlapiv3.PelletReasonerFactory;
+
  /* NOTE: not sure how to structure this yet either.
   *
   * TODO: 1) figure out how to access classes, individuals, properties, etc.
@@ -58,6 +61,10 @@ public class OntologyManager {
       System.out.println(ontologyId);
       System.out.println(ontologyIri);
       System.out.println(ontologyAxioms);
+      
+      PelletReasoner reasoner = PelletReasonerFactory.getInstance().createReasoner( ontology );
+      reasoner.getKB().realize();
+		reasoner.getKB().printClassTree();
    }
    
    
