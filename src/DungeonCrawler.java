@@ -16,20 +16,134 @@ public class DungeonCrawler {
 
    private static final String ontologyFileName = "./CSC481-Ontology-Bustamante_Farnum.owl";
    
+   public static class Player {
+      int attack, defense, hp, speed;
+      double luck;
+      
+      public Player(int a, int b, int c, int d, double l) {
+         attack = a;
+         defense = b;
+         hp = c;
+         speed = d;
+         luck = l;
+      }
+   }
+   
    public static void main(String[] args) {
       OntologyManager ontologyManager;
       OWLOntology ontology;
       Character player;
-      
+      String[] next_move_ar;
+      String next_room_string;
+      String monster_string;
+      String player_name;
+      String name;
+      Player adv = new Player(100, 20, 20, 20, 1.0);
+      boolean player_set = false;
       
       ontologyManager = new OntologyManager(ontologyFileName);
       ontology = ontologyManager.ontology;
       if(ontology == null)
          return;
-      ontologyManager.testOntology();
+      
+      
+      Scanner scanner = new Scanner(System.in);
+      System.out.println("Hey Adventurer!");
+      System.out.println("Look out! Many dangerous dungeons wreak havoc here in this land.");
+      System.out.println("But I think you'll be just fine - I can tell that your gonna do great things, just be the look in your eyes");
+      System.out.println("So then! Adventurer! What's' your name?");
+      System.out.println("Link, Groose, Isaac, Lyra, Talon, Lonk, or ToonLink?");
+      name = scanner.next();
+      while(!name.equals("Link") && !name.equals("Groose")&& !name.equals("Isaac") && !name.equals("Lyra") && !name.equals("Talon") && !name.equals("Lonk") && !name.equals("ToonLink")) {
+         System.out.println("Hey! Listen! That wasn't one of the options!! Don't try to trick me, I know you're one of them! So who are ya?");
+         System.out.println("Link, Groose, Isaac, Lyra, Talon, Lonk, or ToonLink?");
+         name = scanner.next();
+      }
+      System.out.println("Onward! Toward great adventure " + name + "!");
       
       
       //player = createCharacterFromPrompt();
+      //player_name = "Lonk";
+      player_name = name;
+      
+      ontologyManager.initializeDungeon(player_name);
+      
+      
+      
+      System.out.println(player_name + ". You are in " + ontologyManager.curRoomIRI.toString().split("#")[1] + " of the dungeon.");
+      
+      for (int i = 15; i > 0; i--) {
+         next_move_ar = ontologyManager.getNextMove();
+
+         switch(next_move_ar[0]) {
+            case "room": 
+               next_room_string = next_move_ar[1];
+               ontologyManager.enterRoom(next_room_string);
+               System.out.println(player_name + " moves to " + next_room_string + ".");
+               break;
+            case "monster":
+               monster_string = next_move_ar[1];
+               System.out.println(player_name + " is in battle with " + monster_string + ".");
+               
+               if (!player_set) {
+                  adv = new Player(ontologyManager.uattack, ontologyManager.udefense, ontologyManager.uhp, ontologyManager.uspeed, ontologyManager.uluck);
+                  player_set = true;
+               }
+               Player monster = new Player(ontologyManager.attack, ontologyManager.defense, ontologyManager.hp, ontologyManager.speed, ontologyManager.luck);
+               
+               double crit = 1.0;
+                 while(monster.hp > 0 && adv.hp > 0) {
+                     if(adv.speed > monster.speed) {
+                         if(Math.random() %100 < adv.luck*10)
+                             crit = 1.5;
+                         else
+                             crit = 1.0;
+                         monster.hp -= (int) (adv.attack * crit - monster.defense);
+                         if(Math.random() %100 < monster.luck*10)
+                             crit = 1.5;
+                         else
+                             crit = 1.0;
+                         adv.hp -= (int) (monster.attack * crit - adv.defense);
+                     } else {
+                         if(Math.random() %100 < monster.luck*110)
+                             crit = 1.5;
+                         else
+                             crit = 1.0;
+                         adv.hp -= (int) (monster.attack * crit - adv.defense);
+                         if(Math.random() %100 < adv.luck*10)
+                             crit = 1.5;
+                         else
+                             crit = 1.0;
+                         monster.hp -= (int) (adv.attack * crit - monster.defense);
+                     
+                     }
+                     
+                     if (adv.hp > 0)
+                        System.out.println(player_name + " has HP: " + adv.hp);
+                     else {
+                        System.out.println("Hey Listen! Game over...");
+                        return;
+                     }
+                     if (monster.hp > 0)
+                        System.out.println(monster_string + " has HP: " + monster.hp);
+                     else
+                        System.out.println(monster_string + " has HP: 0");
+                 }
+               
+               
+               System.out.println(player_name + " has defeated the " + monster_string + "!");
+               
+               ontologyManager.removeMonster(monster_string);
+               break;
+            case "object":
+               break;
+            default:
+               i = 0;
+               break;
+         }
+      }
+      
+      System.out.println("Congratulations " + player_name + "! You beat the dungeon!");
       
    }
    
